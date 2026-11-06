@@ -17,7 +17,7 @@ const validarProducto = ({nombre, precio, stock}) =>{
 
 const listar = async (req,res) => {
     try{
-        const productos = await Productos.obtenerTodos();
+        const productos = await Producto.obtenerTodos();
         res.status(200).json(productos);
     }catch(error){
         console.error(error);
@@ -68,24 +68,25 @@ const actualizar = async (req, res) => {
         if (filasAfectadas === 0){
             return res.status(404).json({ mensaje: 'Producto no encontrado' });
         }
+        
         const actualizado = await Producto.obtenerPorId(id);
-        res.status(200).json({ mensaje: 'Error al actualizar el producto' });
+        res.status(200).json(actualizado);
     }catch(error){
         console.error(error);
         res.status(500).json({ mensaje: 'Error al actualizar el producto' });
     }
 };
 //DELETE /api/productos/:id
-const eliminar = async (req, res) =>{
-    try{
-        const filasAfectadas = await producto.eliminar(req,params.id);
-        if(filasAfectadas === 0){
+const eliminar = async (req, res) => {
+    try {
+        const filasAfectadas = await Producto.eliminar(req.params.id); 
+        if (filasAfectadas === 0) {
             return res.status(404).json({ mensaje: 'Producto no encontrado' });
         }
         res.status(200).json({ mensaje: 'Producto eliminado correctamente' });
-    }catch(error){
+    } catch (error) {
         console.error(error);
-        res.status(500).json({ mensaje: 'Error al eliminar el producto'});
+        res.status(500).json({ mensaje: 'Error al eliminar el producto' });
     }
 };
 
